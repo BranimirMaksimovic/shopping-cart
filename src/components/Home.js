@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { faker } from "@faker-js/faker";
+import SingleProduct from "./SingleProduct";
+import "./styles.css";
+
+faker.seed(100);
 
 const Home = () => {
   const productsArray = [...Array(20)].map((p) => ({
@@ -8,9 +12,22 @@ const Home = () => {
     price: faker.commerce.price(),
     image: faker.image.technics(),
   }));
-  console.log(productsArray);
+  const [cart, setCart] = useState([]);
 
-  return <div>Home</div>;
+  const [products] = useState(productsArray);
+  console.log(cart);
+  return (
+    <div className="productContainer">
+      {products.map((prod) => (
+        <SingleProduct
+          key={prod.id}
+          prod={prod}
+          cart={cart}
+          setCart={setCart}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default Home;
